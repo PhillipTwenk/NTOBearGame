@@ -14,8 +14,8 @@ public class PortalSystem : MonoBehaviour
     {
         CharacterPosition = GetComponent<Transform>();
         rbCharacter = GetComponent<Rigidbody>();
-        DirectionMushroomJump = new Vector3(1f, 0.01f, 13f);
-        jumpForce = 12f;
+        DirectionMushroomJump = new Vector3(1f, 0.00001f, 400f);
+        jumpForce = 5f;
     }
     void OnCollisionEnter(Collision other)
     {
@@ -34,7 +34,7 @@ public class PortalSystem : MonoBehaviour
             CameraPosition.position = newCamPosition;
         }
         if(other.gameObject.tag == "MushroomJump"){
-            rbCharacter.AddForce(DirectionMushroomJump * jumpForce, ForceMode.Impulse);
+            rbCharacter.AddForce(DirectionMushroomJump * jumpForce);
         }
     }
 }
