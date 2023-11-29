@@ -78,9 +78,13 @@ public class UIController : MonoBehaviour
         ArrayButtonsMain[4].SetActive(true);
     }
     public void MarksMethod(GameObject ButtonObj){
+        //Получение имени Кнопки
         string name = ButtonObj.name;
+        //Получение его номера 
         char nameNumberChar = name[6];
+        //Перевод номера в целочисленный тип
         int nameNumber = (nameNumberChar - '0') - 1;
+        //Перенос персонажа и камеры в нужное место
         Vector3 newPositionCharacter = new Vector3(CheckPointArrayPosition[nameNumber].position.x, CheckPointArrayPosition[nameNumber].position.y, CheckPointArrayPosition[nameNumber].position.z + 5);
         characterPosition.position = newPositionCharacter;
         Vector3 newCamPosition = new Vector3(characterPosition.position.x, characterPosition.position.y, characterPosition.position.z);

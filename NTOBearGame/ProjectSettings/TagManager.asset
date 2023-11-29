@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PortalTriggerForward
   - PortalTriggerBackward
+  - MushroomJump
   layers:
   - Default
   - TransparentFX
