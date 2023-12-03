@@ -3484,7 +3484,7 @@ GameObject:
   - component: {fileID: 5465553186574584668}
   - component: {fileID: 8451489433724080633}
   m_Layer: 0
-  m_Name: Heater 1
+  m_Name: Disintegrator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3536,7 +3536,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3583,8 +3583,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6864d362d68b6f49bcd1c28f5ec635e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building_name: "\u041F\u0435\u0447\u044C"
-  sys_building_name: Heater
+  building_name: "\u0414\u0435\u0437\u0438\u043D\u0442\u0435\u0433\u0440\u0430\u0442\u043E\u0440"
+  sys_building_name: Disintegrator
   element_ids: 
   element_names: []
   temp_storage: []

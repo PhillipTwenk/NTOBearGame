@@ -126,6 +126,7 @@ public class BuildingObject : MonoBehaviour
             ActionsChoice.ClearOptions(); // очищаем опции выбора
             List<string> actionsInfo = Building.ActionsChoiceInfo(building_name); // заносим в список через функцию все действия агрегата
             ActionsChoice.AddOptions(actionsInfo);
+            ParameterInput.gameObject.SetActive(true);
 
             // - доступные выходы
             ExitsChoice.ClearOptions(); // очищаем опции выбора
@@ -180,11 +181,6 @@ public class BuildingObject : MonoBehaviour
     // OUTPUT: - (сохранение действия в action и в зависимости от него включение параметра)
     public void CheckChosenAction(){ // проверка при выборе действия (всегда в одном порядке: 1 - с параметром; 2 - без параметра; 3 - удалить остатки)
         action = ActionsChoice.options[ActionsChoice.value].text;
-        if(ActionsChoice.value == 1){
-            ParameterInput.gameObject.SetActive(true);
-        } else {
-            ParameterInput.gameObject.SetActive(false);
-        }
     }
 
     // Сохранение результата параметра

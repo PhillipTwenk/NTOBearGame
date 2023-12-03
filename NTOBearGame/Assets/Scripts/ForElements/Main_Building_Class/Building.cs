@@ -111,13 +111,25 @@ public static class Building
         int action_id = Convert.ToInt32(action_info.Rows[0][0]); // id действия
         bool perm_output = Convert.ToBoolean(action_info.Rows[0][1]); // наличие вывода(true = есть; false = без выходного вещества)
 
+        string action_name = DBManager.ExecuteQuery($"SELECT action_name FROM actions WHERE id_action");
         string res_element_query = ""; // запрос в БД
-        res_element_query = $"SELECT result1, result2 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
+        if(action_id > 1 && !action_name.Contains("оставить основной элемент")){
+            if(parameter == 1){
+                res_element_query = $"SELECT result1 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = 0";
+            } else if (parameter == 2){
+                res_element_query = $"SELECT result2 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = 0";
+            } else if (parameter == 0){
+                res_element_query = $"SELECT result1,result2 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = 0";
+            }
+        } else if (action_id > 1 && action_name.Contains("оставить основной элемент")){
+            res_element_query = $"SELECT result1 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
+        } else {
+            res_element_query = $"SELECT result1,result2 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
+        }
+
         Debug.Log(res_element_query);
 
         DataTable res_element_ids = DBManager.GetTable(res_element_query); // проведение нужного запроса в БД
-        Debug.Log(res_element_ids.Rows[0][0]);
-        Debug.Log(res_element_ids.Rows[0][1]);
         if(res_element_ids.Rows.Count == 0){ // если такой реакции нет
             res_element_query = $"SELECT result1, result2 FROM elements_reactions WHERE id_element1 = {element_ids[1]} AND id_element2 = {element_ids[0]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
             res_element_ids = DBManager.GetTable(res_element_query); // проведение второго запроса в БД (если user решил провести реакцию соединения Cl и Na, а не Na и Cl, как положено в таблице)
