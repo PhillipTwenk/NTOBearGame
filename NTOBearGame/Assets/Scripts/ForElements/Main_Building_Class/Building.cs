@@ -14,7 +14,7 @@ using System;
 public static class Building
 {   
     // СТАТИЧНЫЕ ПЕРЕМЕННЫЕ В КЛАССЕ
-    
+    public static bool is_agregat_canvas_activated;
 
     // ОБЩИЕ МЕТОДЫ
     // - Пояснения к комментам:
@@ -111,8 +111,9 @@ public static class Building
         int action_id = Convert.ToInt32(action_info.Rows[0][0]); // id действия
         bool perm_output = Convert.ToBoolean(action_info.Rows[0][1]); // наличие вывода(true = есть; false = без выходного вещества)
 
-        string action_name = DBManager.ExecuteQuery($"SELECT action_name FROM actions WHERE id_action");
+        string action_name = DBManager.ExecuteQuery($"SELECT action_name FROM actions WHERE id_action = {action_id}");
         string res_element_query = ""; // запрос в БД
+
         if(action_id > 1 && !action_name.Contains("оставить основной элемент")){
             if(parameter == 1){
                 res_element_query = $"SELECT result1 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = 0";
@@ -130,6 +131,7 @@ public static class Building
         Debug.Log(res_element_query);
 
         DataTable res_element_ids = DBManager.GetTable(res_element_query); // проведение нужного запроса в БД
+        Debug.Log(res_element_ids.Rows.Count);
         if(res_element_ids.Rows.Count == 0){ // если такой реакции нет
             res_element_query = $"SELECT result1, result2 FROM elements_reactions WHERE id_element1 = {element_ids[1]} AND id_element2 = {element_ids[0]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
             res_element_ids = DBManager.GetTable(res_element_query); // проведение второго запроса в БД (если user решил провести реакцию соединения Cl и Na, а не Na и Cl, как положено в таблице)
@@ -155,7 +157,7 @@ public static class Building
                 results.Add(info); // пополнение итогового списка информацией об элементе
             }
         } else if(elementsDT != null){
-            for(int i = 0; i < elementsDT.Rows.Count; i++){
+            for(int i = 0; i < elementsDT.Columns.Count; i++){
                 string value = elementsDT.Rows[0][i].ToString(); // получение id элемента из i столбца
                 Dictionary<string, string> info = ElementInfo(element_id: Convert.ToInt32(value)); // заполнение информации об элементе в словарь
                 results.Add(info); // пополнение итогового списка информацией об элементе
@@ -208,12 +210,8 @@ public static class Building
     }
 
 
-    // Вывод результата реакции в нужное место
+    // Вывод результата реакции в другой агрегат
     // INPUT: элемент, имя агрегата, в который нужно направить
-    // OUTPUT: - (помещает элемент в temp_storage агрегата)
-    public static void Output(Dictionary <string, string> Element, Dictionary<string, string> temp_storage){
-        temp_storage = Element;
-        return;
-    }
+    // OUTPUT: - (помещает элемент в место принятия веществ агрегата)
 
 }

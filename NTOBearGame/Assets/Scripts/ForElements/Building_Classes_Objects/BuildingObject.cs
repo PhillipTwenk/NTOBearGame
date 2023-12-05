@@ -49,35 +49,32 @@ public class BuildingObject : MonoBehaviour
     [SerializeField] InputField ParameterInput; // Строка для ввода параметра
     [SerializeField] ElementsPrefabs EP; // Список префабов всех элементов
     [SerializeField] GameObject OutputPlace; // Место у текущего агрегата, куда выводится итог реакции (если цепочка алгоритмов закончилась)
+    [SerializeField] GameObject InputPlace; // Место у текущего агрегата, куда вводится итог реакции (если существует цепочка алгоритмов)
     [SerializeField] Text AlgorithmText; // Текст алгоритма в UI
     [SerializeField] GameObject PlayerMenu; // Основное меню игрока (отключаем при открытии канваса агрегата )
     [SerializeField] Text AgregatName; // Надпись (название алгоритма) в UI
-    [SerializeField] TMP_Text ReactionStateText; // Надпись (состояние алгоритма) в UI
+    [SerializeField] TMP_Text ReactionStateText; // Надпись над объектом(состояние алгоритма)
+    [SerializeField] TMP_Text InputElementsText; // Надпись над объектом(подающиеся элементы)
 
     // Запуск при появлении на сцене
     // INPUT: -
     // OUTPUT: - (сброс предыдущих алгоритмов и отключение канваса)
     void Start()
     {
+        Transporter.AgregatInputPlaces[building_name] = InputPlace;
         // обнуляем сохраненный алгоритм до этого
-        for(int i = 1; i < 3; i++){
-            element_ids.Add(PlayerPrefs.GetInt($"{sys_building_name}ElementID{i}"));
-            if(element_ids[i-1] != 0){
-                element_names.Add(PlayerPrefs.GetString($"{sys_building_name}ElementName{i}"));
-            } else{
-                element_names.Add("-");
-            }
-        }
-        action = PlayerPrefs.GetString($"{sys_building_name}Action");
-        exit = PlayerPrefs.GetString($"{sys_building_name}Exit");
-        parameter = PlayerPrefs.GetInt($"{sys_building_name}Parameter");
+        DeleteAlgorithm();
         AgregatName.text = $"{building_name}";
 
-        Canvas.gameObject.SetActive(false); // сразу отключаем канвас агрегата
-        ParameterInput.gameObject.SetActive(false);  // сразу отключаем поле ввода параметра действия
-        PlayerMenu.SetActive(true); // включаем основное меню игрока
+        ExitAgregatUI();
     }
-
+    public void ExitAgregatUI(){
+        ParameterInput.gameObject.SetActive(false); // отключаем поле ввода для параметра
+        Canvas.gameObject.SetActive(false); //отключаем канвас
+        is_canvas_activated = false;
+        Building.is_agregat_canvas_activated = false;
+        PlayerMenu.SetActive(true); // отключаем интерфейс игрока, чтобы не было наслоения
+    }
     // Функция вызывается каждый кадр и предназначена для проверки закрытия интерфейса алгоритма на Esc
     // INPUT: -
     // OUTPUT: - (при нажатии на кнопку Esc, пока активен интерфейс агрегата, происходит цеопчка действий для удачного закрытия его интерфейса)
@@ -88,16 +85,13 @@ public class BuildingObject : MonoBehaviour
             if(action != "" && (ElementsChoice1.value != 0 && ElementsChoice2.value != 0) && ExitsChoice.options[ExitsChoice.value].text != ""){ // если алгоритм есть
                 BuildAlgorithm(); // сохраняем алгоритм
             } else { // если же нет
-                ParameterInput.gameObject.SetActive(false); // отключаем поле ввода для параметра
-                Canvas.gameObject.SetActive(false); //отключаем канвас
-                is_canvas_activated = false;
-                PlayerMenu.SetActive(true); // отключаем интерфейс игрока, чтобы не было наслоения
+                ExitAgregatUI();
             }
         } else if(is_reacted){ // если есть какой-то статус реакции
             ReactionStateText.text = reaction_state; // ставим этот статус
             timer += Time.deltaTime;
             if(timer > 3f){
-                ReactionStateText.text = reaction_state; // убираем статус через таймер 
+                ReactionStateText.text = ""; // убираем статус через таймер 
                 is_reacted = false;
             }
         }
@@ -107,10 +101,11 @@ public class BuildingObject : MonoBehaviour
     // INPUT: - (клик по мыши на агрегат)
     // OUTPUT: - (все нужные значения в выпадающих списках из БД)
     void OnMouseDown(){
-        if(is_canvas_activated == false){
+        if(!Building.is_agregat_canvas_activated && !is_canvas_activated){
             PlayerMenu.SetActive(false);
             Canvas.gameObject.SetActive(true);
             is_canvas_activated = true;
+            Building.is_agregat_canvas_activated = true;
             // Заполнение опций для выбора алгоритма          
             // - доступные элементы для 1 позиции
             ElementsChoice1.ClearOptions(); // очищаем опции выбора
@@ -143,6 +138,7 @@ public class BuildingObject : MonoBehaviour
         element_ids.Clear();
         element_names.Clear();
 
+        parameter = Convert.ToInt32(ParameterInput.text);
         exit = ExitsChoice.options[ExitsChoice.value].text;
         element_ids.Add(ElementsChoice1.value);
         element_ids.Add(ElementsChoice2.value);
@@ -170,10 +166,7 @@ public class BuildingObject : MonoBehaviour
             AlgorithmText.text = $"{action} {element_names[0]} и {element_names[1]}, Параметр = {parameter}, Вывести в {exit}";
         }
 
-        ParameterInput.gameObject.SetActive(false); // отключаем поле ввода для параметра
-        Canvas.gameObject.SetActive(false); //отключаем канвас
-        is_canvas_activated = false;
-        PlayerMenu.SetActive(true); // отключаем интерфейс игрока, чтобы не было наслоения
+        ExitAgregatUI();
     }
 
     // Сохранение действия при выборе
@@ -190,6 +183,21 @@ public class BuildingObject : MonoBehaviour
         parameter = Convert.ToInt32(ParameterInput.text);
     }
 
+    public void DeleteAlgorithm(){
+        for(int i = 1; i < 3; i++){
+            PlayerPrefs.DeleteKey($"{sys_building_name}ElementName{i}");
+            PlayerPrefs.DeleteKey($"{sys_building_name}ElementID{i}");
+        }
+
+        PlayerPrefs.DeleteKey($"{sys_building_name}Parameter");
+        PlayerPrefs.DeleteKey($"{sys_building_name}Action");
+        PlayerPrefs.DeleteKey($"{sys_building_name}Exit");
+        AlgorithmText.text = "";
+
+        parameter = 0;
+        action = "";
+    }
+
     private void OnTriggerEnter(Collider coll){
         string element_name = coll.name.ToString().Split('(')[0]; // просмотр имени объекта (split сделан в случае такого названия - Na(Clone), которое наш алгоритм не засчитает за элемент впринципе)
         if(!elements_info.Contains(coll.name) || !element_names.Contains(element_name)){ // если прикоснувшийся объект вообще не вещество или он не указан в списке элементов алгоритма
@@ -198,6 +206,7 @@ public class BuildingObject : MonoBehaviour
 
         temp_storage.Add(element_name); // добавление элемента в хранилище агрегата
         Destroy(coll.gameObject); // моментальное уничтожение объекта (в данном контексте положили в агрегат)
+        InputElementsText.text += $"{element_name}\n";
 
         // Условие: если в temp_storage находятся вещества, которые являются условием для начала алгоритма, то начинается подготовка к проведению реакции
         if((temp_storage.Contains(PlayerPrefs.GetString($"{sys_building_name}ElementName1")) || PlayerPrefs.GetString($"{sys_building_name}ElementName1") == "-") && (temp_storage.Contains(PlayerPrefs.GetString($"{sys_building_name}ElementName2")) || PlayerPrefs.GetString($"{sys_building_name}ElementName2") == "-") ){
@@ -213,11 +222,16 @@ public class BuildingObject : MonoBehaviour
                 parameter=PlayerPrefs.GetInt($"{sys_building_name}Parameter") // параметр действия
             );
 
+
             // если результата нет
-            if(result_element.Count == 0){
+            if(Convert.ToInt32(result_element[0]["element_id"]) == temp_element_ids[0]){
                 reaction_state = "Нет такой реакции!"; // выставление соответствующего состояния агрегата
                 is_reacted = true;
-                return;
+                if(exit == building_name){
+                    Instantiate(EP.elements_prefabs[Convert.ToInt32(result_element[0]["element_id"])-1], OutputPlace.transform.position, Quaternion.identity);
+                } else {
+                    Instantiate(EP.elements_prefabs[Convert.ToInt32(result_element[0]["element_id"])-1], Transporter.AgregatInputPlaces[PlayerPrefs.GetString($"{sys_building_name}Exit")].transform.position, Quaternion.identity);
+                }
             } else{ // если же он есть
                 reaction_state = "Реакция прошла успешно!";
                 is_reacted = true;
@@ -225,25 +239,16 @@ public class BuildingObject : MonoBehaviour
                     if(Convert.ToInt32(element["element_id"]) == 0){
                         continue;
                     }
-                    Debug.Log(element["name"]); // вывод имени элемента
+                    
                     if(exit == building_name){
                         Instantiate(EP.elements_prefabs[Convert.ToInt32(element["element_id"])-1], OutputPlace.transform.position, Quaternion.identity);
+                    } else {
+                        Instantiate(EP.elements_prefabs[Convert.ToInt32(element["element_id"])-1], Transporter.AgregatInputPlaces[PlayerPrefs.GetString($"{sys_building_name}Exit")].transform.position, Quaternion.identity);
                     }
                 }
             }
-            
-            for(int i = 1; i < 3; i++){
-                PlayerPrefs.DeleteKey($"{sys_building_name}ElementName{i}");
-                PlayerPrefs.DeleteKey($"{sys_building_name}ElementID{i}");
-            }
-
-            PlayerPrefs.DeleteKey($"{sys_building_name}Parameter");
-            PlayerPrefs.DeleteKey($"{sys_building_name}Action");
-            PlayerPrefs.DeleteKey($"{sys_building_name}Exit");
-            AlgorithmText.text = "";
-
-            parameter = 0;
-            action = "";
+            InputElementsText.text = "";
+            DeleteAlgorithm();        
             element_ids.Clear();
             element_names.Clear();
             temp_storage.Clear();
