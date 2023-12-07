@@ -11,10 +11,7 @@ public class UIController : MonoBehaviour
     public Transform characterPosition;
     public Transform CameraPosition;
     public Transform[] CheckPointArrayPosition;
-    private void Start()
-    {
 
-    }
     #region Buttons Methods
     public void MapButtonOpen(){
         //Activation Map
@@ -24,6 +21,11 @@ public class UIController : MonoBehaviour
         ArrayMenus[3].SetActive(false);
         ArrayButtonsMain[5].SetActive(true);
         ArrayButtonsMain[4].SetActive(false);
+        ArrayButtonsMain[3].SetActive(false);
+        ArrayButtonsMain[2].SetActive(false);
+        ArrayButtonsMain[1].SetActive(false);
+        ArrayButtonsMain[0].SetActive(false);
+        Building.is_agregat_canvas_activated = true;
     }
     public void ChatButtonOpen(){
         //Activation chat 
@@ -32,8 +34,12 @@ public class UIController : MonoBehaviour
         ArrayMenus[2].SetActive(false);
         ArrayMenus[3].SetActive(false);
         ArrayButtonsMain[5].SetActive(true);
-        ArrayButtonsMain[3].SetActive(false);
         ArrayButtonsMain[4].SetActive(false);
+        ArrayButtonsMain[3].SetActive(false);
+        ArrayButtonsMain[2].SetActive(false);
+        ArrayButtonsMain[1].SetActive(false);
+        ArrayButtonsMain[0].SetActive(false);
+        Building.is_agregat_canvas_activated = true;
     }
     public void ListButtonOpen(){
         //Activation list with Chemical elements
@@ -43,6 +49,11 @@ public class UIController : MonoBehaviour
         ArrayMenus[3].SetActive(false);
         ArrayButtonsMain[5].SetActive(true);
         ArrayButtonsMain[4].SetActive(false);
+        ArrayButtonsMain[3].SetActive(false);
+        ArrayButtonsMain[2].SetActive(false);
+        ArrayButtonsMain[1].SetActive(false);
+        ArrayButtonsMain[0].SetActive(false);
+        Building.is_agregat_canvas_activated = true;
     }
     public void BriefcaseButtonOpen(){
         //Activation our portable briefcase
@@ -51,11 +62,12 @@ public class UIController : MonoBehaviour
         ArrayMenus[2].SetActive(false);
         ArrayMenus[3].SetActive(true);
         ArrayButtonsMain[5].SetActive(true);
-        ArrayButtonsMain[0].SetActive(false);
-        ArrayButtonsMain[1].SetActive(false);
-        ArrayButtonsMain[2].SetActive(false);
-        ArrayButtonsMain[3].SetActive(false);
         ArrayButtonsMain[4].SetActive(false);
+        ArrayButtonsMain[3].SetActive(false);
+        ArrayButtonsMain[2].SetActive(false);
+        ArrayButtonsMain[1].SetActive(false);
+        ArrayButtonsMain[0].SetActive(false);
+        Building.is_agregat_canvas_activated = true;
     }
     public void NotificationButtonOpen(){
         //Activation chat
@@ -63,9 +75,13 @@ public class UIController : MonoBehaviour
         ArrayMenus[1].SetActive(false);
         ArrayMenus[2].SetActive(false);
         ArrayMenus[3].SetActive(false);
-        ArrayButtonsMain[3].SetActive(false);
         ArrayButtonsMain[5].SetActive(true);
         ArrayButtonsMain[4].SetActive(false);
+        ArrayButtonsMain[3].SetActive(false);
+        ArrayButtonsMain[2].SetActive(false);
+        ArrayButtonsMain[1].SetActive(false);
+        ArrayButtonsMain[0].SetActive(false);
+        Building.is_agregat_canvas_activated = true;
     }
     public void CloseButton(){
         //Activation chat
@@ -77,6 +93,7 @@ public class UIController : MonoBehaviour
         ArrayButtonsMain[1].SetActive(true);
         ArrayButtonsMain[2].SetActive(true);
         ArrayButtonsMain[4].SetActive(true);
+        Building.is_agregat_canvas_activated = false;
     }
     public void MarksMethod(GameObject ButtonObj){
         string name = ButtonObj.name;

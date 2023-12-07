@@ -6,10 +6,10 @@ public class MovementCharacter : MonoBehaviour
 {
     private Rigidbody rbCharacter;
     private Animator CharacterAnimator;
-    [SerializeField]private float speed;
-    [SerializeField]private float speedRotation;
-    [SerializeField]private float jumpForce;
-    [SerializeField]private float jumpForceForLongJump;
+    [SerializeField] private float speed;
+    [SerializeField] private float speedRotation;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpForceForLongJump;
     public Transform RayCastEmpty;
     public LayerMask Default;
     private void Start()

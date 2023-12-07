@@ -123,14 +123,21 @@ public static class Building
                 res_element_query = $"SELECT result1,result2 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = 0";
             }
         } else if (action_id > 1 && action_name.Contains("оставить основной элемент")){
-            res_element_query = $"SELECT result1 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
+            res_element_query = $"SELECT result1 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id-1}' AND parameter_for_action = {parameter}";
+        } else if (action_id > 1 && action_name.Contains("оставить основной элемент") && action_name.Contains("Аннигилировать")){
+            res_element_query = "";
         } else {
             res_element_query = $"SELECT result1,result2 FROM elements_reactions WHERE id_element1 = {element_ids[0]} AND id_element2 = {element_ids[1]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
         }
 
         Debug.Log(res_element_query);
-
-        DataTable res_element_ids = DBManager.GetTable(res_element_query); // проведение нужного запроса в БД
+        DataTable res_element_ids = null;
+        if(res_element_query != ""){
+            res_element_ids = DBManager.GetTable(res_element_query); // проведение нужного запроса в БД
+        } else { // если пришла реакция исключение - Аннигилировать, оставить основной элемент
+            return ReactionResultFormat(elementsList: new List<int>(){0,element_ids[0]});
+        }
+        
         Debug.Log(res_element_ids.Rows.Count);
         if(res_element_ids.Rows.Count == 0){ // если такой реакции нет
             res_element_query = $"SELECT result1, result2 FROM elements_reactions WHERE id_element1 = {element_ids[1]} AND id_element2 = {element_ids[0]} AND action = '{action_id}' AND parameter_for_action = {parameter}";
@@ -140,8 +147,8 @@ public static class Building
             }
         } else if(!perm_output){
             return null; // если реакция завязана на уничтожении элемента (исключение: при нагревании элемент расплавляется)
-        } 
-        
+        }
+
         return ReactionResultFormat(elementsDT: res_element_ids); // возвращение информации об итоговом элементе
     }
 

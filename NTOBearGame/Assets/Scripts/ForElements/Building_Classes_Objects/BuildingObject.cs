@@ -224,7 +224,7 @@ public class BuildingObject : MonoBehaviour
 
 
             // если результата нет
-            if(Convert.ToInt32(result_element[0]["element_id"]) == temp_element_ids[0]){
+            if(Convert.ToInt32(result_element[0]["element_id"]) == temp_element_ids[0] && PlayerPrefs.GetString($"{sys_building_name}Action") != "Аннигилировать, оставить основной элемент"){
                 reaction_state = "Нет такой реакции!"; // выставление соответствующего состояния агрегата
                 is_reacted = true;
                 if(exit == building_name){
