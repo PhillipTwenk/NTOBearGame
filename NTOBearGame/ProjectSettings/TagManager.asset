@@ -11,6 +11,7 @@ TagManager:
   - DetailPanel
   - MovePlatform
   - Case
+  - ThornSound
   layers:
   - Default
   - TransparentFX

@@ -63,8 +63,8 @@ public class EffectController : MonoBehaviour
             toxic = PlayerState.player_state.Split(' ')[2];
             ElementName.text = PlayerState.player_state.Split(' ')[2];
         } else if (PlayerState.player_state.Split(' ')[0] == "Противоядие" && (toxic == PlayerState.player_state.Split(' ')[2] || toxic == "")){
-            timer = 60;
-            timer_limit = 60;
+            timer = 120;
+            timer_limit = 120;
             immune_to = PlayerState.player_state.Split(' ')[2];
             string entry_element = DBManager.ExecuteQuery($"SELECT entry_element FROM elements_effects WHERE result_parameter = '{Convert.ToInt32(Building.ElementInfo(element_name: immune_to)["element_id"])}' AND result = 2");
             ElementName.text = Building.ElementInfo(element_id: Convert.ToInt32(entry_element))["name"];

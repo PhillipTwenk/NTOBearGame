@@ -43,7 +43,7 @@ public class CheckPointClass
 
     public void DeadTeleportation(Transform[] CPposArray, Transform CharacterPos, Transform CameraPos) {
         int CPCondition = PlayerPrefs.GetInt("CPCondition");
-        Vector3 newCharacterPosition = new Vector3(CPposArray[CPCondition].position.x, CPposArray[CPCondition].position.y, CPposArray[CPCondition].position.z + 5);
+        Vector3 newCharacterPosition = new Vector3(CPposArray[CPCondition].position.x, CPposArray[CPCondition].position.y, CPposArray[CPCondition].position.z);
         CharacterPos.position = newCharacterPosition;
         Vector3 newCamPosition = new Vector3(CharacterPos.position.x, CharacterPos.position.y, CharacterPos.position.z);
         CameraPos.position = newCamPosition;

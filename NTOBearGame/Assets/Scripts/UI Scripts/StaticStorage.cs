@@ -28,8 +28,23 @@ public class StaticStorage : MonoBehaviour
     public AudioSource MusicInLab;
     public AudioSource MusicInZone;
     public AudioSource MusicInStartGameMenu;
+    public AudioClip HitHammer;
+    public AudioClip ThornHit;
+    public AudioClip NewMessage;
+    public AudioClip Walking;
+    public AudioClip Running;
+    public static AudioClip HitHammerStatic;
+    public static AudioClip ThornHitStatic;
+    public static AudioClip NewMessageStatic;
+    public static AudioClip WalkingStatic;
+    public static AudioClip RunningStatic;
     void Start()
     {
+        Walking = WalkingStatic;
+        Running = RunningStatic;
+        HitHammer = HitHammerStatic;
+        ThornHit = ThornHitStatic;
+        NewMessage = NewMessageStatic;
         MusicInLabStatic = MusicInLab;
         MusicInZoneStatic = MusicInZone;
         MusicInStartGameMenuStatic = MusicInStartGameMenu;

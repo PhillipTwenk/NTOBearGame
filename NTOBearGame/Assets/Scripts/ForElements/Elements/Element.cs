@@ -7,7 +7,7 @@ using TMPro;
 
 public class Element : MonoBehaviour
 {
-    private Dictionary<string, string> element_info;
+    [SerializeField] private Dictionary<string, string> element_info;
     private bool is_mouse_on_object = false;
     [SerializeField] TMP_Text element_name_text;
     private QuestClass QuestClassInstance;
@@ -112,7 +112,7 @@ public class Element : MonoBehaviour
                 Counter = 1;
             }
         }
-        if(gameObject.name.Split('(')[0] == "C" && PlayerPrefs.GetInt("ProgressInt") == 26){
+        if(gameObject.name.Split('(')[0] == "CO₂" && PlayerPrefs.GetInt("ProgressInt") == 26){
             QuestClassInstance.StartNewQuest(PlayerPrefs.GetInt("ProgressInt"));
             if(Counter != 3)
             {
@@ -124,17 +124,6 @@ public class Element : MonoBehaviour
             }
         }
         if(gameObject.name.Split('(')[0] == "NaOH" && PlayerPrefs.GetInt("ProgressInt") == 26){
-            QuestClassInstance.StartNewQuest(PlayerPrefs.GetInt("ProgressInt"));
-            if(Counter != 3)
-            {
-                Counter += 1;
-            }
-            else
-            {
-                Counter = 1;
-            }
-        }
-        if(gameObject.name.Split('(')[0] == "O" && PlayerPrefs.GetInt("ProgressInt") == 26){
             QuestClassInstance.StartNewQuest(PlayerPrefs.GetInt("ProgressInt"));
             if(Counter != 3)
             {
