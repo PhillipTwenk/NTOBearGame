@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1361006918735037381}
   - component: {fileID: 6452209614583496662}
   - component: {fileID: 5241026938814924310}
+  - component: {fileID: 6254404896491979555}
   m_Layer: 0
   m_Name: NaCl
   m_TagString: Untagged
@@ -79,6 +80,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element_name_text: {fileID: 3169384397272083004}
+  outline: {fileID: 6254404896491979555}
+--- !u!114 &6254404896491979555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926021666962241834}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.8773585, g: 0.7759262, b: 0.13716115, a: 1}
+  outlineWidth: 4.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &4931791994404080552
 GameObject:
   m_ObjectHideFlags: 0

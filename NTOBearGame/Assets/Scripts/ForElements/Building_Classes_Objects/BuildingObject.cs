@@ -55,6 +55,7 @@ public class BuildingObject : MonoBehaviour
     [SerializeField] Text AgregatName; // Надпись (название алгоритма) в UI
     [SerializeField] TMP_Text ReactionStateText; // Надпись над объектом(состояние алгоритма)
     [SerializeField] TMP_Text InputElementsText; // Надпись над объектом(подающиеся элементы)
+    [SerializeField] Outline outline;
 
     // Запуск при появлении на сцене
     // INPUT: -
@@ -188,6 +189,14 @@ public class BuildingObject : MonoBehaviour
         actions.RemoveAt(actions.Count-1);
         exits.RemoveAt(exits.Count-1);
         AlgorithmText.text = "";
+    }
+
+    private void OnMouseEnter(){
+        outline.enabled = true; // если мы навелись на объект
+    }
+
+    private void OnMouseExit(){
+        outline.enabled = false; // если мы отводим мышку от объекта
     }
 
     private void OnTriggerEnter(Collider coll){

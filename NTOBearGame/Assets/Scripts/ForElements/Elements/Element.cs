@@ -10,6 +10,7 @@ public class Element : MonoBehaviour
     [SerializeField] private Dictionary<string, string> element_info;
     private bool is_mouse_on_object = false;
     [SerializeField] TMP_Text element_name_text;
+    [SerializeField] Outline outline;
     private QuestClass QuestClassInstance;
     private int Counter;
 
@@ -22,17 +23,22 @@ public class Element : MonoBehaviour
     }
     private void Update(){
         if(Input.GetMouseButtonDown(0) && is_mouse_on_object){
+            
             AddItemToInventory();
         } else if (Input.GetMouseButtonDown(1) && is_mouse_on_object){
             AddEffect();
         }
     }
-
+    private void OnMouseDown(){
+        outline.outlineWidth = 8f;
+    }
     private void OnMouseEnter(){
         is_mouse_on_object = true; // если мы навелись на объект
+        outline.enabled = true;
     }
     private void OnMouseExit(){
         is_mouse_on_object = false; // если мы отводим мышку от объекта
+        outline.enabled = false;
     }   
 
     private void AddItemToInventory(){
@@ -134,13 +140,16 @@ public class Element : MonoBehaviour
                 Counter = 1;
             }
         }
+
         DBManager.ExecuteQueryWithoutAnswer($"UPDATE elements_info SET studied_state = 1 WHERE name = '{element_name_text.text}' AND studied_state = 0");
         string empty_slot_id = DBManager.ExecuteQuery($"SELECT MIN(slot_id) FROM inventory WHERE element_id = 0");
         DBManager.ExecuteQueryWithoutAnswer($"UPDATE inventory SET element_id = {element_info["element_id"]} WHERE slot_id = {Convert.ToInt32(empty_slot_id)}"); 
         Inventory.is_changed = true;
         if(gameObject.tag != "Case"){
+            outline.outlineWidth = 4.5f;
             Destroy(gameObject);
         }
+        outline.outlineWidth = 4.5f;
     }
     private void AddEffect(){
         if(gameObject.name.Split('(')[0] == "NaOCl" && PlayerPrefs.GetInt("ProgressInt") == 12){

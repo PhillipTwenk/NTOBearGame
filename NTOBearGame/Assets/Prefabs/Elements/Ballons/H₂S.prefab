@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 5764163384766635064}
   - component: {fileID: 5764163384766635063}
   - component: {fileID: 5764163384766635066}
+  - component: {fileID: -6312436169186810698}
   m_Layer: 0
   m_Name: "H\u2082S"
   m_TagString: Untagged
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element_name_text: {fileID: 68180815985807274}
+  outline: {fileID: -6312436169186810698}
 --- !u!65 &5764163384766635066
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -166,6 +168,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6449065, y: 5.236618, z: 1.8198265}
   m_Center: {x: -0.022630852, y: 2.4588747, z: -0.072576076}
+--- !u!114 &-6312436169186810698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764163384766635062}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 2
+  outlineColor: {r: 0.8773585, g: 0.7759262, b: 0.13716115, a: 1}
+  outlineWidth: 4.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &6472379322043062253
 GameObject:
   m_ObjectHideFlags: 0

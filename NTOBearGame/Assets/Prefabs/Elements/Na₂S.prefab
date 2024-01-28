@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7681020264627860514}
   - component: {fileID: 9083407215688750371}
   - component: {fileID: 7580991260880582506}
+  - component: {fileID: -6115671456352383087}
   m_Layer: 0
   m_Name: "Na\u2082S"
   m_TagString: Untagged
@@ -129,6 +130,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element_name_text: {fileID: 7852531234143281742}
+  outline: {fileID: -6115671456352383087}
+--- !u!114 &-6115671456352383087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773864540556385361}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.8773585, g: 0.7759262, b: 0.13716115, a: 1}
+  outlineWidth: 4.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &4556655810658204657
 PrefabInstance:
   m_ObjectHideFlags: 0
