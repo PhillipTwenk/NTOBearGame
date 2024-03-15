@@ -71,14 +71,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CutoffHeight: -3.36
+    - _AlphaClip: 1
+    - _Blend: 0
+    - _CastShadows: 1
+    - _Cull: 2
+    - _CutoffHeight: -7.3199906
+    - _DstBlend: 0
     - _GlowThikness: 0.1
-    - _GridScale: 1
+    - _GridScale: 1.4
     - _GridThikness: 3.45
     - _NoiseScale: 40
     - _NoiseStrenght: 0.64
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
-    - _GlowColor: {r: 0, g: 2.572549, b: 1.4389855, a: 0}
+    - _GlowColor: {r: 2, g: 0.94017434, b: 0, a: 0}
   m_BuildTextureStacks: []
