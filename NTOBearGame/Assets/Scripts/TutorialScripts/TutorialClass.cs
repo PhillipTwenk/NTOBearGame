@@ -70,17 +70,17 @@ public class TutorialClass: MonoBehaviour
             //Перемещение панели
             MoveProfPanel();
 
-            //Активация подсказки, если это нужно
-            HintActivate();
-        
             //Активация нужных UI элементов
             ThisUI();
+
+            //Активация подсказки, если это нужно
+            HintActivate();
 
             //Включение подсветки агрегатов
             OutlineTutorial();
             
             //Включает / выключает затемнение
-            //ShadowControl();
+            ShadowControl();
         
             //Обнуление перед следующим вводом текста
             StaticStorage.TextMProTutorialStatic.text = "";
@@ -119,7 +119,7 @@ public class TutorialClass: MonoBehaviour
         PreTutorialPanel.SetActive(false);
         ProfTutorialPanel.SetActive(true);
         TutorialCounter = 1;
-        Building.is_agregat_canvas_activated = true;
+        BuildingObject.usingBuildings = false;
         AddElementsToItem();
         InputNewTextInProfTutorial();
     }
@@ -133,7 +133,7 @@ public class TutorialClass: MonoBehaviour
         ProfTutorialPanel.SetActive(false);
         CanvasTutorial.SetActive(false);
         Destroy(NewAgregatObject);
-        Building.is_agregat_canvas_activated = false;
+        BuildingObject.usingBuildings = false;
         
         //Если мы находимся на панели, где нас спрашивают о прохождении туториала, и нажимаем нет
         if (IsOnPreTutorialPanel)
@@ -257,10 +257,10 @@ public class TutorialClass: MonoBehaviour
                 }
                 BuildingsOutine[i].enabled = false;
             }
-            if (TutorialCounter == 20)
-            {
-                BuildingsOutine[4].enabled = false;
-            }
+        }
+        if (TutorialCounter == 21)
+        {
+            BuildingsOutine[4].enabled = false;
         }
     }
     

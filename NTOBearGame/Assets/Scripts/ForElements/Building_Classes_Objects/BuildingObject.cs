@@ -17,7 +17,8 @@ using TMPro;
 public class BuildingObject : MonoBehaviour
 {
     // СТАТИЧНЫЕ ПЕРЕМЕННЫЕ В КЛАССЕ
-    
+    public static bool is_canvas_activated = false; // Состояние канваса
+    public static bool usingBuildings = true; // Можно ли использовать агрегаты
 
     // ОБЩИЕ МЕТОДЫ
     // - Пояснения к комментам:
@@ -32,8 +33,7 @@ public class BuildingObject : MonoBehaviour
     private string exit; // Конечная точка алгоритма, куда отправить итог (если указан текущий агрегат - вывод сразу рядом с ним)
     private string reaction_state; // Статус реакции
     private int parameter = 0; // Параметр алгоритма
-    private float timer;
-    private bool is_canvas_activated = false; // Состояние канваса 
+    private float timer; 
     private bool is_reacted = false;
     public List<int> element_ids; // Используемые в алгоритме ID элементов из базы (если 0 -> вещества нет)
     public List<string> element_names; // Используемые в алгоритме имена веществ из базы (если "" -> вещества нет)
@@ -96,14 +96,14 @@ public class BuildingObject : MonoBehaviour
         }
     }
     private void OnMouseEnter(){
-        if (!Building.is_agregat_canvas_activated)
+        if (usingBuildings)
         {
             outline.enabled = true; // если мы навелись на объект
         }
     }
 
     private void OnMouseExit(){
-        if (!Building.is_agregat_canvas_activated)
+        if (usingBuildings)
         {
             outline.enabled = false; // если мы навелись на объект
         }
@@ -112,7 +112,7 @@ public class BuildingObject : MonoBehaviour
     // INPUT: - (клик по мыши на агрегат)
     // OUTPUT: - (все нужные значения в выпадающих списках из БД)
     void OnMouseDown(){
-        if(!Building.is_agregat_canvas_activated && !is_canvas_activated){
+        if(!Building.is_agregat_canvas_activated && !is_canvas_activated && usingBuildings){
             StaticStorage.TutorialClassStatic.ContinueTutorial(36);
             StaticStorage.TutorialClassStatic.ContinueTutorial(47);
             PlayerMenu.SetActive(false);
