@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EffectController : MonoBehaviour
 {
+    [SerializeField] Transform HomePosition;
     public Transform CharacterPosition;
     public Transform CameraPosition;
     public Transform[] CPpositionsArray;
     [SerializeField] Image EffectImage;
-    [SerializeField] Text TimerText;
-    [SerializeField] Text ElementName;
+    [SerializeField] TMP_Text TimerText;
+    [SerializeField] TMP_Text ElementName;
+    [SerializeField] Canvas EffectCanvas;
+    [SerializeField] Image BackgroundEffect;
     public Sprite[] ArrayEffectSprites;
     private float timer;
     private float timer_limit;
@@ -22,20 +26,25 @@ public class EffectController : MonoBehaviour
     void Start()
     {
         CPclass = new CheckPointClass();
+        EffectImage.color = new Color32(16,255,0,0);
+        BackgroundEffect.color = new Color32(16,255,0,0);
     }
     private void Update(){
-        if(PlayerState.is_changed == true){
+        Debug.Log(PlayerState.is_changed);
+        if(PlayerState.is_changed){
             NewEffect();
         }
 
         if(timer_limit > 0){
+            EffectCanvas.enabled = true;
             TimerText.text = Convert.ToInt32(timer).ToString();
             timer -= Time.deltaTime;
             if(timer <= 0f){
                 timer = 0;
-
+                EffectCanvas.enabled = false;
                 EffectImage.sprite = null;
-                EffectImage.color = new Color32(255,255,225,0);
+                EffectImage.color = new Color32(16,255,0,0);
+                BackgroundEffect.color = new Color32(16,255,0,0);
                 EffectImage.fillAmount = 1f;
                 TimerText.text = "";
                 
@@ -44,7 +53,12 @@ public class EffectController : MonoBehaviour
                     immune_to = "";
                 } else if (toxic != ""){
                     toxic = "";
-                    CPclass.DeadTeleportation(CPpositionsArray, CharacterPosition, CameraPosition);
+                    Debug.Log(StaticStorage.IsInLab);
+                    if(StaticStorage.IsInLab){
+                        CharacterPosition.position = HomePosition.position;
+                    } else {
+                        CPclass.DeadTeleportation(CPpositionsArray, CharacterPosition, CameraPosition);
+                    }
                 }
 
                 isEffect = false;
@@ -55,7 +69,9 @@ public class EffectController : MonoBehaviour
     }
 
     private void NewEffect(){
-        EffectImage.color = new Color32(255,255,225,255);
+        EffectImage.color = new Color32(16,255,0,255);
+        BackgroundEffect.color = new Color32(16,255,0,255);
+        Debug.Log(2);
         if(PlayerState.player_state.Split(' ')[0] == "Смерть" && immune_to != PlayerState.player_state.Split(' ')[2] && toxic == ""){
             timer = 5;
             timer_limit = 5;
