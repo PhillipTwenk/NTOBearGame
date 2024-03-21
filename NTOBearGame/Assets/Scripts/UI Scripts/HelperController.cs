@@ -102,8 +102,6 @@ public class HelperController : MonoBehaviour
     //Корутина для рандомных сообщений
     private IEnumerator CoroutineRandomMessage()
     {
-        Debug.Log(IsMessageCoroutineBreak);
-        Debug.Log(IsQuestMessageExist);
         while (!IsMessageCoroutineBreak && !IsQuestMessageExist)
         {
             string MessageHelperQuery = $"SELECT Message FROM RandomHelperMessage WHERE id = '{Random.Range(1, 10)}'";
@@ -114,7 +112,7 @@ public class HelperController : MonoBehaviour
                 break;
             }
             TMProMessage.text = MessageHelper;
-            
+
             yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
     }

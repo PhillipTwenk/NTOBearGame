@@ -35,13 +35,13 @@ public class UIController : MonoBehaviour
     {
         
         //Открытие инвентаря
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E)  && !StaticStorage.IsInStartMenu)
         {
             BriefcaseButtonOpen();
         }
         
         //Рабочая панель
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Q) && !StaticStorage.IsInStartMenu)
         {
             BearOS();
             AntidotePanel();

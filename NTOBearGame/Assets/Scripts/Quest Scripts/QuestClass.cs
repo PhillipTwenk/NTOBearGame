@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -39,7 +40,7 @@ public class QuestClass
 
             //Получение информации о том, нужно ли отправлять сообщение на текущем квесте
 
-            string QueryBoolMessage = $"SELECT AreThereMessages FROM Panel_Table WHERE id = '{progress}'".ToString();
+            string QueryBoolMessage = $"SELECT AreThereMessages FROM Panel_Table WHERE id = '{progress}'";
             bool AreThereMessagesOnTheQuest = bool.Parse(DBManager.ExecuteQuery(QueryBoolMessage));
 
             //Проверка
