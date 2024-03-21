@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Mono.Data.Sqlite;
-using System.Data;
 using System;
 using TMPro;
 
@@ -50,12 +47,13 @@ public class BuildingObject : MonoBehaviour
     [SerializeField] ElementsPrefabs EP; // Список префабов всех элементов
     [SerializeField] GameObject OutputPlace; // Место у текущего агрегата, куда выводится итог реакции (если цепочка алгоритмов закончилась)
     [SerializeField] GameObject InputPlace; // Место у текущего агрегата, куда вводится итог реакции (если существует цепочка алгоритмов)
-    [SerializeField] TextMeshProUGUI AlgorithmText; // Текст алгоритма в UI
+    [SerializeField] TMP_Text AlgorithmText; // Текст алгоритма в UI
     [SerializeField] GameObject PlayerMenu; // Основное меню игрока (отключаем при открытии канваса агрегата )
-    [SerializeField] Text AgregatName; // Надпись (название алгоритма) в UI
+    [SerializeField] TMP_Text AgregatName; // Надпись (название алгоритма) в UI
     [SerializeField] TMP_Text ReactionStateText; // Надпись над объектом(состояние алгоритма)
     [SerializeField] TMP_Text InputElementsText; // Надпись над объектом(подающиеся элементы)
     [SerializeField] Outline outline;
+    
     // Запуск при появлении на сцене
     // INPUT: -
     // OUTPUT: - (сброс предыдущих алгоритмов и отключение канваса)
@@ -74,6 +72,7 @@ public class BuildingObject : MonoBehaviour
         Building.is_agregat_canvas_activated = false;
         PlayerMenu.SetActive(true); // отключаем интерфейс игрока, чтобы не было наслоения
     }
+    
     // Функция вызывается каждый кадр и предназначена для проверки закрытия интерфейса алгоритма на Esc
     // INPUT: -
     // OUTPUT: - (при нажатии на кнопку Esc, пока активен интерфейс агрегата, происходит цеопчка действий для удачного закрытия его интерфейса)
@@ -93,6 +92,10 @@ public class BuildingObject : MonoBehaviour
                 ReactionStateText.text = ""; // убираем статус через таймер 
                 is_reacted = false;
             }
+        }
+
+        if(!Building.is_agregat_canvas_activated){
+            ExitAgregatUI();
         }
     }
     private void OnMouseEnter(){

@@ -150,6 +150,7 @@ public class Element : MonoBehaviour
         }
     }
     private void AddEffect(){
+        Debug.Log(1);
         if(gameObject.name.Split('(')[0] == "NaOCl"){
             QuestClassInstance.CheckQuest(12);
         }
